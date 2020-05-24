@@ -2,7 +2,7 @@
 Copyright (c) 2008, Carnegie Mellon University  
 This software is distributed under the terms of the Simplified BSD License (see [LICENSE.TXT](LICENSE.TXT))
 
-Current Version: **2.10.1**
+Current Version: **1.5.3**
 
 ## Dependencies:
 1. [Inter Process Communication (IPC)](https://github.com/cmu-tbd/ipc)
