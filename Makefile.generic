@@ -90,45 +90,17 @@ ifndef BASE_OS_DIR
   export BASE_OS_DIR
 endif
 
-#
-# If TDL_USE_SINGLE_DIR is defined, we will (by default) place all object
-# in a single directory, and all the library files in a single directory.
-#
-# If it is NOT defined, we will (by default) place all object/library
-# files in their own OS-specific subdirectories.
-#
-# Naturally, anything and everything can be overriden with the right setenv's.
-#
-ifdef TDL_USE_SINGLE_DIR
-
-  ifndef TDL_OS_DIR
-    TDL_OS_DIR = 
-    export TDL_OS_DIR
-  endif
-
-  ifndef TDL_OBJECT_DIR
-    TDL_OBJECT_DIR = obj
-      # Export TDL_OBJECT_DIR:  There is no GLOBAL object directory.
-      # Each subdirectory gets its own private object directory.
-    export TDL_OBJECT_DIR
-  endif
-
-else
-
-  ifndef TDL_OS_DIR
-    TDL_OS_DIR = $(BASE_OS_DIR)
-    export TDL_OS_DIR
-  endif
-
-  ifndef TDL_OBJECT_DIR
-    TDL_OBJECT_DIR = obj/$(TDL_OS_DIR)
-      # Export TDL_OBJECT_DIR:  There is no GLOBAL object directory.
-      # Each subdirectory gets its own private object directory.
-    export TDL_OBJECT_DIR
-  endif
-
+ifndef TDL_OS_DIR
+  TDL_OS_DIR = 
+  export TDL_OS_DIR
 endif
 
+ifndef TDL_OBJECT_DIR
+  TDL_OBJECT_DIR = obj
+    # Export TDL_OBJECT_DIR:  There is no GLOBAL object directory.
+    # Each subdirectory gets its own private object directory.
+  export TDL_OBJECT_DIR
+endif
 
 #
 # Users should either setenv the above BASE directories appropriately,
@@ -151,7 +123,7 @@ ifndef TDL_INCLUDE_DIR
 endif
 
 ifndef TDL_LIBRARY_DIR
-  TDL_LIBRARY_DIR = $(BASE_TDL_DIR)/lib/$(TDL_OS_DIR)
+  TDL_LIBRARY_DIR = $(BASE_TDL_DIR)/lib
   #Do NOT Export:  Needs to be reset if/when BASE_TDL_DIR changes.
 endif
 
@@ -161,7 +133,7 @@ ifndef IPC_INCLUDE_DIR
 endif
 
 ifndef IPC_LIBRARY_DIR
-  IPC_LIBRARY_DIR = $(BASE_IPC_DIR)/lib/$(BASE_OS_DIR)
+  IPC_LIBRARY_DIR = $(BASE_IPC_DIR)/lib
   export IPC_LIBRARY_DIR
 endif
 
@@ -169,7 +141,7 @@ endif
   # (Though 'make echoraw-CENTRAL_PATH' could prove useful.)
   # It is extracted from the environment by tdldef.C's runCentral() at runtime.
 ifndef CENTRAL_PATH
-  CENTRAL_PATH = $(BASE_IPC_DIR)/bin/$(BASE_OS_DIR)/central
+  CENTRAL_PATH = $(BASE_IPC_DIR)/bin/central
   export CENTRAL_PATH
 endif
 
@@ -180,11 +152,7 @@ ifndef CXX_THREADS_INCLUDE_DIR
 endif
 
 ifndef CXX_THREADS_LIBRARY_DIR
-  ifdef THREADS_USE_SINGLE_DIR
     CXX_THREADS_LIBRARY_DIR = $(BASE_THREADS_DIR)/lib/
-  else
-    CXX_THREADS_LIBRARY_DIR = $(BASE_THREADS_DIR)/lib/$(BASE_OS_DIR)
-  endif
   export CXX_THREADS_LIBRARY_DIR
 endif
 
